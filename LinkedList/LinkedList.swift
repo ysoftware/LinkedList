@@ -29,6 +29,12 @@ public class LinkedList<Element> {
     
     fileprivate var firstNode: Node?
     fileprivate var lastNode: Node?
+    
+    public init(_ elements: Element...) {
+        for element in elements {
+            append(element)
+        }
+    }
 }
 
 extension LinkedList: CustomDebugStringConvertible {
