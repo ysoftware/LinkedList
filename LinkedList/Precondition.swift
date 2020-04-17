@@ -13,7 +13,7 @@ import Foundation
 ///
 /// This will call Swift's `precondition` by default (and terminate the program).
 /// But it can be changed at runtime to be tested instead of terminating.
-func _precondition(_ condition: @autoclosure () -> Bool,
+func precondition(_ condition: @autoclosure () -> Bool,
                    _ message: @autoclosure () -> String = "",
                    file: StaticString = #file,
                    line: UInt = #line) {
