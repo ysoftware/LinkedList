@@ -13,6 +13,7 @@ class LinkedListTest: XCTestCase {
     
     func testIt() {
         let list = LinkedList<String>()
+        print(list)
         
         list.append("Hello")
         list.append(",")
@@ -30,6 +31,15 @@ class LinkedListTest: XCTestCase {
         
         expectingPreconditionFailure("Index out of bounds") { _ = list[4] }
         expectingPreconditionFailure("Index out of bounds") { _ = list[-1] }
+        
+        list.reverse()
+        
+        XCTAssertEqual("Hello", list[3])
+        XCTAssertEqual(",", list[2])
+        XCTAssertEqual(" ", list[1])
+        XCTAssertEqual("Sailor", list[0])
+        
+        print(list)
     }
 }
 
