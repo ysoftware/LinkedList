@@ -52,7 +52,8 @@ public extension LinkedList {
         node.nextNode?.previousNode = node.previousNode
     }
     
-    func append(_ element: Element) {
+    @discardableResult
+    func append(_ element: Element) -> Node {
         let node = Node(element)
         
         if let lastNode = lastNode {
@@ -63,6 +64,7 @@ public extension LinkedList {
         if count == 0 { firstNode = node }
         count += 1
         lastNode = node
+        return node
     }
     
     func reverse() {
@@ -82,7 +84,7 @@ public extension LinkedList {
     
     func copy() -> LinkedList<Element> {
         let newList = LinkedList<Element>()
-        forEach(newList.append)
+        forEach { newList.append($0) }
         return newList
     }
     
