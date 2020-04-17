@@ -11,42 +11,53 @@ import XCTest
 
 class LinkedListTest: XCTestCase {
     
-    func testIt() {
-        let list = LinkedList<String>()
-        print(list)
+    func testSubscriptGet() {
+        let list = LinkedList("Hello", ",", " ", "World")
         
-        list.append("Hello")
-        list.append(",")
-        list.append(" ")
-        list.append("World")
+        XCTAssertEqual("Hello", list[0])
+        XCTAssertEqual(",",     list[1])
+        XCTAssertEqual(" ",     list[2])
+        XCTAssertEqual("World", list[3])
         
-        XCTAssertEqual("Hello",     list[0])
-        XCTAssertEqual(",",         list[1])
-        XCTAssertEqual(" ",         list[2])
-        XCTAssertEqual("World",     list[3])
-        
-        list[3] = "Sailor"
-        
-        XCTAssertEqual("Sailor", list[3])
-        
+        list.forEach { print($0) }
+    }
+    
+    func testSubscriptOutOfBounds() {
+        let list = LinkedList("Hello", ",", " ", "World")
         expectingPreconditionFailure("Index out of bounds") { _ = list[4] }
         expectingPreconditionFailure("Index out of bounds") { _ = list[-1] }
-        
+    }
+    
+    func testReverse() {
+        let list = LinkedList("Hello", ",", " ", "World")
         list.reverse()
         
-        XCTAssertEqual("Hello",     list[3])
-        XCTAssertEqual(",",         list[2])
-        XCTAssertEqual(" ",         list[1])
-        XCTAssertEqual("Sailor",    list[0])
-        
-        print(list)
-        
+        XCTAssertEqual("Hello", list[3])
+        XCTAssertEqual(",",     list[2])
+        XCTAssertEqual(" ",     list[1])
+        XCTAssertEqual("World", list[0])
+    }
+    
+    func testSubscriptSet() {
+        let list = LinkedList("Hello", ",", " ", "World")
+        list[3] = "Sailor"
+        XCTAssertEqual("Sailor", list[3])
+    }
+    
+    func testCopy() {
+        let list = LinkedList("Hello", ",", " ", "World")
         let copiedList = list.copy()
         
-        XCTAssertEqual("Hello",     copiedList[3])
-        XCTAssertEqual(",",         copiedList[2])
-        XCTAssertEqual(" ",         copiedList[1])
-        XCTAssertEqual("Sailor",    copiedList[0])
+        XCTAssertEqual("Hello", copiedList[0])
+        XCTAssertEqual(",",     copiedList[1])
+        XCTAssertEqual(" ",     copiedList[2])
+        XCTAssertEqual("World", copiedList[3])
+    }
+    
+    func testSequence() {
+        let list = LinkedList(1, 2, 3, 4, 5, 6, 7, 8, 9)
+        let sum = list.reduce(0, +)
+        XCTAssertEqual(45, sum)
     }
 }
 
