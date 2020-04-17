@@ -53,7 +53,7 @@ public extension LinkedList {
     }
     
     func remove(node: Node) {
-        // TODO: check if it's in this list or move method to Node
+        // TODO: check if it's in this list?
         
         node.previousNode?.nextNode = node.nextNode
         node.nextNode?.previousNode = node.previousNode
