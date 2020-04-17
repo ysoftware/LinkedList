@@ -134,6 +134,17 @@ class LinkedListTest: XCTestCase {
         XCTAssertEqual(4, list.count)
         XCTAssert(list.lastNode === secondToLastNode)
     }
+    
+    func testContains() {
+        let list = LinkedList(1, 2, 3, 4, 5)
+        
+        XCTAssertTrue(list.contains(1))
+        XCTAssertTrue(list.contains(3))
+        XCTAssertTrue(list.contains(5))
+        XCTAssertFalse(list.contains(6))
+        XCTAssertFalse(list.contains(0))
+        XCTAssertFalse(list.contains(-1))
+    }
 }
 
 extension XCTestCase {
