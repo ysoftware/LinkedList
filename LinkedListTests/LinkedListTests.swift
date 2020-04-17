@@ -66,6 +66,15 @@ class LinkedListTest: XCTestCase {
         XCTAssertEqual(" ",     list[1])
         XCTAssertEqual("World", list[2])
     }
+    
+    func testRemoveAtIndex() {
+        let list = LinkedList("Hello", ",", " ", "World")
+        list.removeElement(at: 1)
+        
+        XCTAssertEqual("Hello", list[0])
+        XCTAssertEqual(" ",     list[1])
+        XCTAssertEqual("World", list[2])
+    }
 }
 
 extension XCTestCase {

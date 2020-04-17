@@ -47,6 +47,10 @@ extension LinkedList: CustomDebugStringConvertible {
 
 public extension LinkedList {
     
+    func removeElement(at index: Int) {
+        remove(node: node(at: index))
+    }
+    
     func remove(node: Node) {
         node.previousNode?.nextNode = node.nextNode
         node.nextNode?.previousNode = node.previousNode
@@ -114,7 +118,6 @@ public extension LinkedList {
         return node
     }
 }
-
 
 extension LinkedList: Sequence {
     
