@@ -85,6 +85,7 @@ public extension LinkedList {
         else if index <= 0 { // new first node
             let newNode = Node(value)
             firstNode?.previousNode = newNode
+            newNode.nextNode = firstNode
             firstNode = newNode
             count += 1
         }

@@ -158,15 +158,19 @@ class LinkedListTest: XCTestCase {
         XCTAssertEqual(0, list.first)
         XCTAssertEqual(6, list.count)
         
-        list.insert(7, at: list.count)
+        list.insert(6, at: list.count)
         
-        XCTAssertEqual(7, list.last)
+        XCTAssertEqual(6, list.last)
         XCTAssertEqual(7, list.count)
         
-        list.insert(8, at: 100)
+        list.insert(7, at: 100)
         
-        XCTAssertEqual(8, list.last)
+        XCTAssertEqual(7, list.last)
         XCTAssertEqual(8, list.count)
+        
+        let sum = list.reduce(0, +)
+        
+        XCTAssertEqual(28, sum)
     }
 }
 
