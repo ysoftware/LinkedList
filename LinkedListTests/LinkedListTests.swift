@@ -47,7 +47,6 @@ class LinkedListTest: XCTestCase {
         XCTAssertEqual(",",         copiedList[2])
         XCTAssertEqual(" ",         copiedList[1])
         XCTAssertEqual("Sailor",    copiedList[0])
-        
     }
 }
 

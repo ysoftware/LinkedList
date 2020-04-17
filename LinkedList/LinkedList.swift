@@ -33,6 +33,14 @@ public class LinkedList<Element> {
 
 extension LinkedList: CustomDebugStringConvertible {
     
+    public var debugDescription: String {
+        let describe: (Node?)->String = { $0.map(String.init(describing:)).map { "(\($0))" } ?? "nil" }
+        return "List: count: \(count), first: \(describe(firstNode)), last: \(describe(lastNode))"
+    }
+}
+
+public extension LinkedList {
+    
     func append(_ element: Element) {
         let node = Node(element)
         
@@ -47,7 +55,7 @@ extension LinkedList: CustomDebugStringConvertible {
     }
     
     func reverse() {
-        var node: Node! = firstNode // todo: foreach
+        var node: Node! = firstNode
         while node != nil {
             let _previousNode = node.previousNode
             node.previousNode = node.nextNode
@@ -63,11 +71,7 @@ extension LinkedList: CustomDebugStringConvertible {
     
     func copy() -> LinkedList<Element> {
         let newList = LinkedList<Element>()
-        var node: Node! = firstNode // todo: foreach
-        while node != nil {
-            newList.append(node.value)
-            node = node.nextNode
-        }
+        forEach(newList.append)
         return newList
     }
     
@@ -78,11 +82,6 @@ extension LinkedList: CustomDebugStringConvertible {
         set(newValue) {
             getNode(at: index).value = newValue
         }
-    }
-    
-    public var debugDescription: String {
-        let describe: (Node?)->String = { $0.map(String.init(describing:)).map { "(\($0))" } ?? "nil" }
-        return "List: count: \(count), first: \(describe(firstNode)), last: \(describe(lastNode))"
     }
     
     // MARK: - Private
@@ -105,3 +104,28 @@ extension LinkedList: CustomDebugStringConvertible {
     }
 }
 
+
+extension LinkedList: Sequence {
+    
+    public class LinkedListIterator: IteratorProtocol {
+        
+        public typealias Element = LinkedListElement
+        fileprivate var node: LinkedList.Node?
+        
+        public func next() -> Element? {
+            let value = node?.value
+            node = node?.nextNode
+            return value
+        }
+        
+        fileprivate init(firstNode: LinkedList.Node?) {
+            self.node = firstNode
+        }
+    }
+    
+    public typealias LinkedListElement = Element
+
+    public func makeIterator() -> LinkedListIterator {
+        LinkedListIterator(firstNode: firstNode)
+    }
+}
