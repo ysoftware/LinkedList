@@ -47,6 +47,11 @@ extension LinkedList: CustomDebugStringConvertible {
 
 public extension LinkedList {
     
+    func remove(node: Node) {
+        node.previousNode?.nextNode = node.nextNode
+        node.nextNode?.previousNode = node.previousNode
+    }
+    
     func append(_ element: Element) {
         let node = Node(element)
         
@@ -83,16 +88,14 @@ public extension LinkedList {
     
     subscript(index: Int) -> Element {
         get {
-            getNode(at: index).value
+            node(at: index).value
         }
         set(newValue) {
-            getNode(at: index).value = newValue
+            node(at: index).value = newValue
         }
     }
     
-    // MARK: - Private
-    
-    fileprivate func getNode(at index: Int) -> Node {
+    func node(at index: Int) -> Node {
         precondition(index >= 0 && index < count, "Index out of bounds")
     
         var node: Node!

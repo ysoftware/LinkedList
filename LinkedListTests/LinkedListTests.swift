@@ -18,8 +18,6 @@ class LinkedListTest: XCTestCase {
         XCTAssertEqual(",",     list[1])
         XCTAssertEqual(" ",     list[2])
         XCTAssertEqual("World", list[3])
-        
-        list.forEach { print($0) }
     }
     
     func testSubscriptOutOfBounds() {
@@ -58,6 +56,15 @@ class LinkedListTest: XCTestCase {
         let list = LinkedList(1, 2, 3, 4, 5, 6, 7, 8, 9)
         let sum = list.reduce(0, +)
         XCTAssertEqual(45, sum)
+    }
+    
+    func testRemove() {
+        let list = LinkedList("Hello", ",", " ", "World")
+        list.remove(node: list.node(at: 1))
+        
+        XCTAssertEqual("Hello", list[0])
+        XCTAssertEqual(" ",     list[1])
+        XCTAssertEqual("World", list[2])
     }
 }
 
