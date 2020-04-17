@@ -47,14 +47,12 @@ extension LinkedList: CustomDebugStringConvertible {
 
 public extension LinkedList {
     
-    func removeElement(at index: Int) {
+    func remove(at index: Int) {
         precondition(index >= 0 && index < count, "Index out of bounds")
         remove(node: node(at: index))
     }
     
     func remove(node: Node) {
-        // TODO: check if it's in this list?
-        
         node.previousNode?.nextNode = node.nextNode
         node.nextNode?.previousNode = node.previousNode
         count -= 1
@@ -78,6 +76,30 @@ public extension LinkedList {
         if count == 0 { firstNode = node }
         count += 1
         lastNode = node
+    }
+    
+    func insert(_ value: Element, at index: Int) {
+        if index >= count || index <= 0 && count == 0 { // new last node
+            append(value)
+        }
+        else if index <= 0 { // new first node
+            let newNode = Node(value)
+            firstNode?.previousNode = newNode
+            firstNode = newNode
+            count += 1
+        }
+        else {
+            let newNode = Node(value)
+            let currentNode = node(at: index)
+            let previousNode = currentNode.previousNode
+            
+            newNode.nextNode = currentNode
+            newNode.previousNode = previousNode
+            
+            previousNode?.nextNode = newNode
+            currentNode.previousNode = newNode
+            count += 1
+        }
     }
     
     func reverse() {
@@ -131,13 +153,13 @@ public extension LinkedList {
     
     func dropFirst(_ k: Int = 1) {
         for _ in 0..<k {
-            removeElement(at: 0)
+            remove(at: 0)
         }
     }
     
     func dropLast(_ k: Int = 1) {
         for _ in 0..<k {
-            removeElement(at: count-1)
+            remove(at: count-1)
         }
     }
 }

@@ -109,7 +109,7 @@ class LinkedListTest: XCTestCase {
     
     func testRemoveAtIndex() {
         let list = LinkedList("Hello", ",", " ", "World")
-        list.removeElement(at: 1)
+        list.remove(at: 1)
         
         XCTAssertEqual("Hello", list[0])
         XCTAssertEqual(" ",     list[1])
@@ -120,7 +120,7 @@ class LinkedListTest: XCTestCase {
     func testRemoveFirst() {
         let list = LinkedList(1, 2, 3, 4, 5)
         let secondNode = list.node(at: 1)
-        list.removeElement(at: 0)
+        list.remove(at: 0)
         
         XCTAssertEqual(4, list.count)
         XCTAssert(list.firstNode === secondNode)
@@ -129,7 +129,7 @@ class LinkedListTest: XCTestCase {
     func testRemoveLast() {
         let list = LinkedList(1, 2, 3, 4, 5)
         let secondToLastNode = list.node(at: list.count-2)
-        list.removeElement(at: list.count-1)
+        list.remove(at: list.count-1)
         
         XCTAssertEqual(4, list.count)
         XCTAssert(list.lastNode === secondToLastNode)
@@ -144,6 +144,29 @@ class LinkedListTest: XCTestCase {
         XCTAssertFalse(list.contains(6))
         XCTAssertFalse(list.contains(0))
         XCTAssertFalse(list.contains(-1))
+    }
+    
+    func testInsert() {
+        let list = LinkedList(1, 3, 4, 5)
+        list.insert(2, at: 1)
+        
+        XCTAssertEqual(2, list[1])
+        XCTAssertEqual(5, list.count)
+        
+        list.insert(0, at: 0)
+        
+        XCTAssertEqual(0, list.first)
+        XCTAssertEqual(6, list.count)
+        
+        list.insert(7, at: list.count)
+        
+        XCTAssertEqual(7, list.last)
+        XCTAssertEqual(7, list.count)
+        
+        list.insert(8, at: 100)
+        
+        XCTAssertEqual(8, list.last)
+        XCTAssertEqual(8, list.count)
     }
 }
 
