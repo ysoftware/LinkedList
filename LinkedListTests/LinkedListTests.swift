@@ -23,6 +23,7 @@ class LinkedListTest: XCTestCase {
     
     func testSubscriptOutOfBounds() {
         let list = LinkedList("Hello", ",", " ", "World")
+        
         expectingPreconditionFailure("Index out of bounds") { _ = list[4] }
         expectingPreconditionFailure("Index out of bounds") { _ = list[-1] }
     }
@@ -41,6 +42,7 @@ class LinkedListTest: XCTestCase {
     func testSubscriptSet() {
         let list = LinkedList("Hello", ",", " ", "World")
         list[3] = "Sailor"
+        
         XCTAssertEqual("Sailor", list[3])
         XCTAssertEqual(4, list.count)
     }
@@ -59,7 +61,30 @@ class LinkedListTest: XCTestCase {
     func testSequence() {
         let list = LinkedList(1, 2, 3, 4, 5, 6, 7, 8, 9)
         let sum = list.reduce(0, +)
+        
         XCTAssertEqual(45, sum)
+    }
+    
+    func testSequenceGet() {
+        let list = LinkedList(1, 2, 3, 4, 5, 6, 7, 8, 9)
+        
+        XCTAssertEqual(list.first, 1)
+    }
+    
+    func testDropFirst() {
+        let list = LinkedList(1, 2, 3, 4)
+        _ = list.dropFirst()
+        
+        XCTAssertEqual(2, list.first)
+        XCTAssertEqual(3, list.count)
+    }
+    
+    func testDropLast() {
+        let list = LinkedList(1, 2, 3, 4)
+        _ = list.dropLast()
+        
+        XCTAssertEqual(3, list.last)
+        XCTAssertEqual(3, list.count)
     }
     
     func testRemove() {
@@ -85,7 +110,6 @@ class LinkedListTest: XCTestCase {
     func testRemoveFirst() {
         let list = LinkedList(1, 2, 3, 4, 5)
         let secondNode = list.node(at: 1)
-        
         list.removeElement(at: 0)
         
         XCTAssertEqual(4, list.count)
@@ -95,7 +119,6 @@ class LinkedListTest: XCTestCase {
     func testRemoveLast() {
         let list = LinkedList(1, 2, 3, 4, 5)
         let secondToLastNode = list.node(at: list.count-2)
-        
         list.removeElement(at: list.count-1)
         
         XCTAssertEqual(4, list.count)

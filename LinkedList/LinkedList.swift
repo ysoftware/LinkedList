@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class LinkedList<Element> {
+final public class LinkedList<Element> {
     
     public var count: Int = 0
     
@@ -30,10 +30,10 @@ public class LinkedList<Element> {
     public private(set) var firstNode: Node?
     public private(set) var lastNode: Node?
     
+    // MARK: - Initialization
+    
     public init(_ elements: Element...) {
-        for element in elements {
-            append(element)
-        }
+        elements.forEach(append)
     }
 }
 
@@ -67,8 +67,7 @@ public extension LinkedList {
         }
     }
     
-    @discardableResult
-    func append(_ element: Element) -> Node {
+    func append(_ element: Element) {
         let node = Node(element)
         
         if let lastNode = lastNode {
@@ -79,7 +78,6 @@ public extension LinkedList {
         if count == 0 { firstNode = node }
         count += 1
         lastNode = node
-        return node
     }
     
     func reverse() {
@@ -112,6 +110,8 @@ public extension LinkedList {
         }
     }
     
+    var last: Element? { lastNode?.value }
+    
     func node(at index: Int) -> Node {
         precondition(index >= 0 && index < count, "Index out of bounds")
     
@@ -127,6 +127,18 @@ public extension LinkedList {
             while i > index { node = node.previousNode!; i -= 1 }
         }
         return node
+    }
+    
+    func dropFirst(_ k: Int = 1) {
+        for _ in 0..<k {
+            removeElement(at: 0)
+        }
+    }
+    
+    func dropLast(_ k: Int = 1) {
+        for _ in 0..<k {
+            removeElement(at: count-1)
+        }
     }
 }
 
@@ -153,4 +165,11 @@ extension LinkedList: Sequence {
     public func makeIterator() -> LinkedListIterator {
         LinkedListIterator(firstNode: firstNode)
     }
+}
+
+extension LinkedList: Collection {
+    
+    public func index(after i: Int) -> Int { i + 1 }
+    public var startIndex: Int { 0 }
+    public var endIndex: Int { count - 1 }
 }
