@@ -54,6 +54,7 @@ public extension LinkedList {
     func remove(node: Node) {
         node.previousNode?.nextNode = node.nextNode
         node.nextNode?.previousNode = node.previousNode
+        count -= 1
     }
     
     @discardableResult
