@@ -72,16 +72,26 @@ class LinkedListTest: XCTestCase {
     }
     
     func testDropFirst() {
-        let list = LinkedList(1, 2, 3, 4)
-        _ = list.dropFirst()
+        let list = LinkedList(1, 2, 3, 4, 5, 6)
+        list.dropFirst()
         
         XCTAssertEqual(2, list.first)
+        XCTAssertEqual(5, list.count)
+        
+        list.dropFirst(2)
+        
+        XCTAssertEqual(4, list.first)
         XCTAssertEqual(3, list.count)
     }
     
     func testDropLast() {
-        let list = LinkedList(1, 2, 3, 4)
-        _ = list.dropLast()
+        let list = LinkedList(1, 2, 3, 4, 5, 6)
+        list.dropLast()
+        
+        XCTAssertEqual(5, list.last)
+        XCTAssertEqual(5, list.count)
+        
+        list.dropLast(2)
         
         XCTAssertEqual(3, list.last)
         XCTAssertEqual(3, list.count)
