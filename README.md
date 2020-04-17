@@ -1,3 +1,3 @@
 # LinkedList
 
-Упражнение на реализацию Double-linked Linked List
+Упражнение на реализацию Double-Linked List
