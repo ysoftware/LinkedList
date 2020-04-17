@@ -81,6 +81,26 @@ class LinkedListTest: XCTestCase {
         XCTAssertEqual("World", list[2])
         XCTAssertEqual(3, list.count)
     }
+    
+    func testRemoveFirst() {
+        let list = LinkedList(1, 2, 3, 4, 5)
+        let secondNode = list.node(at: 1)
+        
+        list.removeElement(at: 0)
+        
+        XCTAssertEqual(4, list.count)
+        XCTAssert(list.firstNode === secondNode)
+    }
+    
+    func testRemoveLast() {
+        let list = LinkedList(1, 2, 3, 4, 5)
+        let secondToLastNode = list.node(at: list.count-2)
+        
+        list.removeElement(at: list.count-1)
+        
+        XCTAssertEqual(4, list.count)
+        XCTAssert(list.lastNode === secondToLastNode)
+    }
 }
 
 extension XCTestCase {

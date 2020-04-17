@@ -14,9 +14,9 @@ public class LinkedList<Element> {
     
     public class Node: CustomDebugStringConvertible {
         
-        fileprivate var value: Element
-        fileprivate var nextNode: Node?
-        fileprivate var previousNode: Node?
+        public var value: Element
+        public fileprivate(set) var nextNode: Node?
+        public fileprivate(set) var previousNode: Node?
         
         fileprivate init(_ value: Element) {
             self.value = value
@@ -27,8 +27,8 @@ public class LinkedList<Element> {
         }
     }
     
-    fileprivate var firstNode: Node?
-    fileprivate var lastNode: Node?
+    public private(set) var firstNode: Node?
+    public private(set) var lastNode: Node?
     
     public init(_ elements: Element...) {
         for element in elements {
@@ -48,13 +48,23 @@ extension LinkedList: CustomDebugStringConvertible {
 public extension LinkedList {
     
     func removeElement(at index: Int) {
+        precondition(index >= 0 && index < count, "Index out of bounds")
         remove(node: node(at: index))
     }
     
     func remove(node: Node) {
+        // TODO: check if it's in this list or move method to Node
+        
         node.previousNode?.nextNode = node.nextNode
         node.nextNode?.previousNode = node.previousNode
         count -= 1
+        
+        if firstNode === node {
+            firstNode = node.nextNode
+        }
+        else if lastNode === node {
+            lastNode = node.previousNode
+        }
     }
     
     @discardableResult
