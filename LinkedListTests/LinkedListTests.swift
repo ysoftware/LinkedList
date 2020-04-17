@@ -18,6 +18,7 @@ class LinkedListTest: XCTestCase {
         XCTAssertEqual(",",     list[1])
         XCTAssertEqual(" ",     list[2])
         XCTAssertEqual("World", list[3])
+        XCTAssertEqual(4, list.count)
     }
     
     func testSubscriptOutOfBounds() {
@@ -34,12 +35,14 @@ class LinkedListTest: XCTestCase {
         XCTAssertEqual(",",     list[2])
         XCTAssertEqual(" ",     list[1])
         XCTAssertEqual("World", list[0])
+        XCTAssertEqual(4, list.count)
     }
     
     func testSubscriptSet() {
         let list = LinkedList("Hello", ",", " ", "World")
         list[3] = "Sailor"
         XCTAssertEqual("Sailor", list[3])
+        XCTAssertEqual(4, list.count)
     }
     
     func testCopy() {
@@ -50,6 +53,7 @@ class LinkedListTest: XCTestCase {
         XCTAssertEqual(",",     copiedList[1])
         XCTAssertEqual(" ",     copiedList[2])
         XCTAssertEqual("World", copiedList[3])
+        XCTAssertEqual(list.count, copiedList.count)
     }
     
     func testSequence() {
@@ -65,6 +69,7 @@ class LinkedListTest: XCTestCase {
         XCTAssertEqual("Hello", list[0])
         XCTAssertEqual(" ",     list[1])
         XCTAssertEqual("World", list[2])
+        XCTAssertEqual(3, list.count)
     }
     
     func testRemoveAtIndex() {
@@ -74,6 +79,7 @@ class LinkedListTest: XCTestCase {
         XCTAssertEqual("Hello", list[0])
         XCTAssertEqual(" ",     list[1])
         XCTAssertEqual("World", list[2])
+        XCTAssertEqual(3, list.count)
     }
 }
 
