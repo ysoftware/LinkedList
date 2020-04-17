@@ -47,7 +47,7 @@ extension LinkedList: CustomDebugStringConvertible {
     }
     
     func reverse() {
-        var node: Node! = firstNode
+        var node: Node! = firstNode // todo: foreach
         while node != nil {
             let _previousNode = node.previousNode
             node.previousNode = node.nextNode
@@ -59,6 +59,16 @@ extension LinkedList: CustomDebugStringConvertible {
         let _firstNode = firstNode
         firstNode = lastNode
         lastNode = _firstNode
+    }
+    
+    func copy() -> LinkedList<Element> {
+        let newList = LinkedList<Element>()
+        var node: Node! = firstNode // todo: foreach
+        while node != nil {
+            newList.append(node.value)
+            node = node.nextNode
+        }
+        return newList
     }
     
     subscript(index: Int) -> Element {

@@ -20,10 +20,10 @@ class LinkedListTest: XCTestCase {
         list.append(" ")
         list.append("World")
         
-        XCTAssertEqual("Hello", list[0])
-        XCTAssertEqual(",", list[1])
-        XCTAssertEqual(" ", list[2])
-        XCTAssertEqual("World", list[3])
+        XCTAssertEqual("Hello",     list[0])
+        XCTAssertEqual(",",         list[1])
+        XCTAssertEqual(" ",         list[2])
+        XCTAssertEqual("World",     list[3])
         
         list[3] = "Sailor"
         
@@ -34,12 +34,20 @@ class LinkedListTest: XCTestCase {
         
         list.reverse()
         
-        XCTAssertEqual("Hello", list[3])
-        XCTAssertEqual(",", list[2])
-        XCTAssertEqual(" ", list[1])
-        XCTAssertEqual("Sailor", list[0])
+        XCTAssertEqual("Hello",     list[3])
+        XCTAssertEqual(",",         list[2])
+        XCTAssertEqual(" ",         list[1])
+        XCTAssertEqual("Sailor",    list[0])
         
         print(list)
+        
+        let copiedList = list.copy()
+        
+        XCTAssertEqual("Hello",     copiedList[3])
+        XCTAssertEqual(",",         copiedList[2])
+        XCTAssertEqual(" ",         copiedList[1])
+        XCTAssertEqual("Sailor",    copiedList[0])
+        
     }
 }
 
