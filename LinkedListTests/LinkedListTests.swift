@@ -192,12 +192,28 @@ class LinkedListTest: XCTestCase {
         assertLinked(list)
     }
     
-    func testFilter() {
-        var list = LinkedList(1, 2, 3, 4, 5, 6, 7, 8, 9)
-        list = list.filter { $0 > 5 }
+    func testMap() {
+        let list = LinkedList(1, 2, 3, 4, 5)
         
-        XCTAssertEqual(4, list.count)
-        assertLinked(list)
+        let list2 = list.mapLinked { $0 * 2 }
+        let listSum = list2.reduce(0, +)
+        XCTAssertEqual(30, listSum)
+        assertLinked(list2)
+        
+        let array = list.map { $0 * 2 }
+        let arraySum = array.reduce(0, +)
+        XCTAssertEqual(30, arraySum)
+    }
+    
+    func testFilter() {
+        let list = LinkedList(1, 2, 3, 4, 5, 6, 7, 8, 9)
+        
+        let list2 = list.filterLinked { $0 > 5 }
+        XCTAssertEqual(4, list2.count)
+        assertLinked(list2)
+        
+        let array = list.filter { $0 > 5 }
+        XCTAssertEqual(4, array.count)
     }
     
     func assertLinked<T>(_ list: LinkedList<T>) {

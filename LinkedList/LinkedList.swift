@@ -8,7 +8,7 @@
 
 import Foundation
 
-final public class LinkedList<Element> {
+public class LinkedList<Element> {
     
     public var count: Int = 0
     
@@ -164,7 +164,21 @@ public extension LinkedList {
         }
     }
     
-    func filter(_ isIncluded: (Element) throws -> Bool) rethrows -> LinkedList<Element> {
+    func map<T>(_ transform: (Element) throws -> T) rethrows -> [T] {
+        var result = [T]()
+        try forEach { result.append(try transform($0)) }
+        return result
+    }
+    
+    func mapLinked<T>(_ transform: (Element) throws -> T) rethrows -> LinkedList<T> {
+        let newList = LinkedList<T>()
+        try forEach {
+            newList.append(try transform($0))
+        }
+        return newList
+    }
+    
+    func filterLinked(_ isIncluded: (Element) throws -> Bool) rethrows -> LinkedList<Element> {
         let newList = LinkedList<Element>()
         try forEach {
             if try isIncluded($0) {
