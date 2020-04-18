@@ -192,6 +192,14 @@ class LinkedListTest: XCTestCase {
         assertLinked(list)
     }
     
+    func testFilter() {
+        var list = LinkedList(1, 2, 3, 4, 5, 6, 7, 8, 9)
+        list = list.filter { $0 > 5 }
+        
+        XCTAssertEqual(4, list.count)
+        assertLinked(list)
+    }
+    
     func assertLinked<T>(_ list: LinkedList<T>) {
         guard list.count > 0 else { return }
         

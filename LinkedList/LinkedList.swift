@@ -163,6 +163,16 @@ public extension LinkedList {
             remove(at: count-1)
         }
     }
+    
+    func filter(_ isIncluded: (Element) throws -> Bool) rethrows -> LinkedList<Element> {
+        let newList = LinkedList<Element>()
+        try forEach {
+            if try isIncluded($0) {
+                newList.append($0)
+            }
+        }
+        return newList
+    }
 }
 
 extension LinkedList: Sequence {
