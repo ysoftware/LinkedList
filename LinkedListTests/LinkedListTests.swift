@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import LinkedList
+import LinkedList
 
 class LinkedListTest: XCTestCase {
     
@@ -231,22 +231,5 @@ class LinkedListTest: XCTestCase {
             node = nextNode
         }
         XCTAssertEqual(list.count, count)
-    }
-}
-
-extension XCTestCase {
-    
-    func expectingPreconditionFailure(_ expectedMessage: String, _ block: () -> ()) {
-        let ex = expectation(description: "failing precondition")
-        preconditionClosure = { condition, message, file, line in
-            if !condition {
-                ex.fulfill()
-                XCTAssertEqual(message, expectedMessage, "precondition message didn't match",
-                               file: file, line: line)
-            }
-        }
-        block()
-        waitForExpectations(timeout: 0, handler: nil)
-        preconditionClosure = defaultPreconditionClosure
     }
 }
