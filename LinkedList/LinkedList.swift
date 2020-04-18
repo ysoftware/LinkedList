@@ -105,13 +105,13 @@ public extension LinkedList {
     
     func reverse() {
         var node: Node! = firstNode
-        while node != nil {
+        repeat {
             let _previousNode = node.previousNode
             node.previousNode = node.nextNode
             node.nextNode = _previousNode
             
             node = node.previousNode
-        }
+        } while node != nil
         
         let _firstNode = firstNode
         firstNode = lastNode
