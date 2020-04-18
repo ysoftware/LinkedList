@@ -89,7 +89,7 @@ public extension LinkedList {
             firstNode = newNode
             count += 1
         }
-        else {
+        else { // new node somewhere in the middle
             let newNode = Node(value)
             let currentNode = node(at: index)
             let previousNode = currentNode.previousNode

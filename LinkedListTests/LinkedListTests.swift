@@ -37,6 +37,7 @@ class LinkedListTest: XCTestCase {
         XCTAssertEqual(" ",     list[1])
         XCTAssertEqual("World", list[0])
         XCTAssertEqual(4, list.count)
+        assertLinked(list)
     }
     
     func testSubscriptSet() {
@@ -45,6 +46,7 @@ class LinkedListTest: XCTestCase {
         
         XCTAssertEqual("Sailor", list[3])
         XCTAssertEqual(4, list.count)
+        assertLinked(list)
     }
     
     func testCopy() {
@@ -56,6 +58,7 @@ class LinkedListTest: XCTestCase {
         XCTAssertEqual(" ",     copiedList[2])
         XCTAssertEqual("World", copiedList[3])
         XCTAssertEqual(list.count, copiedList.count)
+        assertLinked(copiedList)
     }
     
     func testSequence() {
@@ -63,12 +66,14 @@ class LinkedListTest: XCTestCase {
         let sum = list.reduce(0, +)
         
         XCTAssertEqual(45, sum)
+        assertLinked(list)
     }
     
     func testSequenceGet() {
         let list = LinkedList(1, 2, 3, 4, 5, 6, 7, 8, 9)
         
         XCTAssertEqual(list.first, 1)
+        assertLinked(list)
     }
     
     func testDropFirst() {
@@ -77,11 +82,13 @@ class LinkedListTest: XCTestCase {
         
         XCTAssertEqual(2, list.first)
         XCTAssertEqual(5, list.count)
+        assertLinked(list)
         
         list.dropFirst(2)
         
         XCTAssertEqual(4, list.first)
         XCTAssertEqual(3, list.count)
+        assertLinked(list)
     }
     
     func testDropLast() {
@@ -90,11 +97,13 @@ class LinkedListTest: XCTestCase {
         
         XCTAssertEqual(5, list.last)
         XCTAssertEqual(5, list.count)
+        assertLinked(list)
         
         list.dropLast(2)
         
         XCTAssertEqual(3, list.last)
         XCTAssertEqual(3, list.count)
+        assertLinked(list)
     }
     
     func testRemove() {
@@ -105,6 +114,7 @@ class LinkedListTest: XCTestCase {
         XCTAssertEqual(" ",     list[1])
         XCTAssertEqual("World", list[2])
         XCTAssertEqual(3, list.count)
+        assertLinked(list)
     }
     
     func testRemoveAtIndex() {
@@ -115,6 +125,7 @@ class LinkedListTest: XCTestCase {
         XCTAssertEqual(" ",     list[1])
         XCTAssertEqual("World", list[2])
         XCTAssertEqual(3, list.count)
+        assertLinked(list)
     }
     
     func testRemoveFirst() {
@@ -124,6 +135,7 @@ class LinkedListTest: XCTestCase {
         
         XCTAssertEqual(4, list.count)
         XCTAssert(list.firstNode === secondNode)
+        assertLinked(list)
     }
     
     func testRemoveLast() {
@@ -133,6 +145,7 @@ class LinkedListTest: XCTestCase {
         
         XCTAssertEqual(4, list.count)
         XCTAssert(list.lastNode === secondToLastNode)
+        assertLinked(list)
     }
     
     func testContains() {
@@ -144,6 +157,7 @@ class LinkedListTest: XCTestCase {
         XCTAssertFalse(list.contains(6))
         XCTAssertFalse(list.contains(0))
         XCTAssertFalse(list.contains(-1))
+        assertLinked(list)
     }
     
     func testInsert() {
@@ -152,25 +166,63 @@ class LinkedListTest: XCTestCase {
         
         XCTAssertEqual(2, list[1])
         XCTAssertEqual(5, list.count)
+        assertLinked(list)
         
         list.insert(0, at: 0)
         
         XCTAssertEqual(0, list.first)
         XCTAssertEqual(6, list.count)
+        assertLinked(list)
         
         list.insert(6, at: list.count)
         
         XCTAssertEqual(6, list.last)
         XCTAssertEqual(7, list.count)
+        assertLinked(list)
         
         list.insert(7, at: 100)
         
         XCTAssertEqual(7, list.last)
         XCTAssertEqual(8, list.count)
+        assertLinked(list)
         
         let sum = list.reduce(0, +)
         
         XCTAssertEqual(28, sum)
+        assertLinked(list)
+    }
+    
+    func assertLinked<T>(_ list: LinkedList<T>) {
+        guard list.count > 0 else { return }
+        
+        func check(_ node: LinkedList<T>.Node) {
+            if node !== list.firstNode {
+                XCTAssertNotNil(node.previousNode)
+            }
+            if node !== list.lastNode {
+                XCTAssertNotNil(node.nextNode)
+            }
+        }
+        
+        var node = list.firstNode!
+        var count = 0
+        while true {
+            check(node)
+            count += 1
+            guard let nextNode = node.nextNode else { break }
+            node = nextNode
+        }
+        XCTAssertEqual(list.count, count)
+        
+        node = list.lastNode!
+        count = 0
+        while true {
+            check(node)
+            count += 1
+            guard let nextNode = node.previousNode else { break }
+            node = nextNode
+        }
+        XCTAssertEqual(list.count, count)
     }
 }
 
