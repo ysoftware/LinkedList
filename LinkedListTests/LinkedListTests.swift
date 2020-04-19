@@ -49,18 +49,6 @@ class LinkedListTest: XCTestCase {
         assertLinked(list)
     }
     
-    func testCopy() {
-        let list = LinkedList("Hello", ",", " ", "World")
-        let copiedList = list.copy()
-        
-        XCTAssertEqual("Hello", copiedList[0])
-        XCTAssertEqual(",",     copiedList[1])
-        XCTAssertEqual(" ",     copiedList[2])
-        XCTAssertEqual("World", copiedList[3])
-        XCTAssertEqual(list.count, copiedList.count)
-        assertLinked(copiedList)
-    }
-    
     func testSequence() {
         let list = LinkedList(1, 2, 3, 4, 5, 6, 7, 8, 9)
         let sum = list.reduce(0, +)

@@ -124,12 +124,6 @@ public extension LinkedList {
         lastNode = _firstNode
     }
     
-    func copy() -> LinkedList<Element> {
-        let newList = LinkedList<Element>()
-        forEach { newList.append($0) }
-        return newList
-    }
-    
     subscript(index: Int) -> Element {
         get {
             precondition(index >= 0 && index < count, "Index out of bounds")
