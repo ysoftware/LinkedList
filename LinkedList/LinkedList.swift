@@ -143,9 +143,7 @@ public extension LinkedList {
         // this goes backwards because of the memory setup
         var node: Node! = lastNode
         repeat {
-            let _previousNode = node.previousNode
-            node.previousNode = node.nextNode
-            node.nextNode = _previousNode
+            swap(&node.previousNode, &node.nextNode)
             
             node = node.nextNode
         } while node != nil
