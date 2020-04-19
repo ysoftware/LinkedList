@@ -107,13 +107,13 @@ class LinkedListTest: XCTestCase {
         // drop exactly all the remaining
         list.dropFirst(3)
         XCTAssertNil(list.first)
-        XCTAssertEqual(0, list.count)
+        XCTAssert(list.isEmpty)
         
         // check drop more than count
         let list2 = LinkedList(1, 2, 3, 4, 5, 6)
         list2.dropFirst(1000)
         XCTAssertNil(list.first)
-        XCTAssertEqual(0, list.count)
+        XCTAssert(list.isEmpty)
         
         list2.dropFirst()
         print(list2)
@@ -138,13 +138,13 @@ class LinkedListTest: XCTestCase {
         // drop exactly all the remaining
         list.dropLast(3)
         XCTAssertNil(list.first)
-        XCTAssertEqual(0, list.count)
+        XCTAssert(list.isEmpty)
         
         // check drop more than count
         let list2 = LinkedList(1, 2, 3, 4, 5, 6)
         list2.dropLast(1000)
         XCTAssertNil(list.first)
-        XCTAssertEqual(0, list.count)
+        XCTAssert(list.isEmpty)
         
         list2.dropLast()
     }

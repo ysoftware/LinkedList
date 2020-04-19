@@ -42,7 +42,7 @@ public class LinkedList<Element> {
     }
     
     public init(_ slice: Slice<LinkedList<Element>>) {
-        guard slice.count > 0 else { return }
+        guard !slice.isEmpty else { return }
         
         var currentNodeBase = slice.base.node(at: slice.startIndex)!
         count = slice.endIndex - slice.startIndex
@@ -90,7 +90,7 @@ public extension LinkedList {
         let node = Node(element)
         lastNode?.nextNode = node
         node.previousNode = lastNode
-        if count == 0 { firstNode = node }
+        if isEmpty { firstNode = node }
         lastNode = node
         count += 1
     }
@@ -99,13 +99,13 @@ public extension LinkedList {
         let node = Node(element)
         firstNode?.previousNode = node
         node.nextNode = firstNode
-        if count == 0 { lastNode = node }
+        if isEmpty { lastNode = node }
         firstNode = node
         count += 1
     }
     
     func insert(_ value: Element, at index: Int) {
-        if index >= count || index <= 0 && count == 0 { // new last node
+        if index >= count || index <= 0 && isEmpty { // new last node
             append(value)
         }
         else if index <= 0 { // new first node
@@ -153,7 +153,7 @@ public extension LinkedList {
     }
     
     func dropFirst(_ k: Int = 1) {
-        guard count > 0 else { return }
+        guard !isEmpty else { return }
         guard k < count else { return clear() }
         
         var node = firstNode
@@ -167,7 +167,7 @@ public extension LinkedList {
     }
     
     func dropLast(_ k: Int = 1) {
-        guard count > 0 else { return }
+        guard !isEmpty else { return }
         guard k < count else { return clear() }
 
         var node = lastNode
