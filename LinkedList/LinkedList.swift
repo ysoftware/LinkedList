@@ -15,8 +15,8 @@ public struct LinkedList<Element> {
     internal class Node: CustomDebugStringConvertible {
         
         public fileprivate(set) var value: Element
-        public fileprivate(set) var nextNode: Node?
-        public fileprivate(set) weak var previousNode: Node?
+        internal fileprivate(set) var nextNode: Node?
+        internal fileprivate(set) weak var previousNode: Node?
         
         fileprivate init(_ value: Element) {
             self.value = value
