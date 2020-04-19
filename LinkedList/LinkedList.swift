@@ -14,7 +14,7 @@ public class LinkedList<Element> {
         
         public fileprivate(set) var value: Element
         public fileprivate(set) var nextNode: Node?
-        public fileprivate(set) var previousNode: Node?
+        public fileprivate(set) weak var previousNode: Node?
         
         fileprivate init(_ value: Element) {
             self.value = value
@@ -109,13 +109,14 @@ public extension LinkedList {
     }
     
     func reverse() {
-        var node: Node! = firstNode
+        // this goes backwards because of the memory management
+        var node: Node! = lastNode
         repeat {
             let _previousNode = node.previousNode
             node.previousNode = node.nextNode
             node.nextNode = _previousNode
             
-            node = node.previousNode
+            node = node.nextNode
         } while node != nil
         
         let _firstNode = firstNode
@@ -139,12 +140,12 @@ public extension LinkedList {
         if index <= count / 2 {
             var i = 0
             node = firstNode
-            while i < index { node = node?.nextNode!; i += 1 }
+            while i < index { node = node?.nextNode; i += 1 }
         }
         else {
             node = lastNode
             var i = count - 1
-            while i > index { node = node?.previousNode!; i -= 1 }
+            while i > index { node = node?.previousNode; i -= 1 }
         }
         return node
     }

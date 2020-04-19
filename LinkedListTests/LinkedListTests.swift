@@ -29,13 +29,14 @@ class LinkedListTest: XCTestCase {
     }
     
     func testReverse() {
-        let list = LinkedList("Hello", ",", " ", "World")
+        let list = LinkedList(3, 2, 1, 0)
         list.reverse()
         
-        XCTAssertEqual("Hello", list[3])
-        XCTAssertEqual(",",     list[2])
-        XCTAssertEqual(" ",     list[1])
-        XCTAssertEqual("World", list[0])
+        XCTAssertEqual(0, list[0])
+        XCTAssertEqual(1, list[1])
+        XCTAssertEqual(2, list[2])
+        XCTAssertEqual(3, list[3])
+        
         XCTAssertEqual(4, list.count)
         assertLinked(list)
     }
