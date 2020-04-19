@@ -10,7 +10,7 @@ import Foundation
 
 internal let LinkedListIndexError = "List index out of bounds"
 
-public class LinkedList<Element> {
+public final class LinkedList<Element> {
     
     internal class Node: CustomDebugStringConvertible {
         
@@ -33,12 +33,10 @@ public class LinkedList<Element> {
     
     // MARK: - Initialization
     
+    public init() { }
+    
     public init(withArray array: [Element]) {
         array.forEach(append)
-    }
-    
-    public init(_ elements: Element...) {
-        elements.forEach(append)
     }
     
     public init(_ slice: Slice<LinkedList<Element>>) {
@@ -269,4 +267,12 @@ extension LinkedList: Collection {
     public func index(after i: Int) -> Int { i + 1 }
     public var startIndex: Int { 0 }
     public var endIndex: Int { count }
+}
+
+extension LinkedList: ExpressibleByArrayLiteral {
+    
+    public convenience init(arrayLiteral elements: Element...) {
+        self.init()
+        elements.forEach(append)
+    }
 }
