@@ -27,6 +27,7 @@ class LinkedListTest: XCTestCase {
         
         expectingPreconditionFailure(LinkedListIndexError) { _ = list[4] }
         expectingPreconditionFailure(LinkedListIndexError) { _ = list[-1] }
+        expectingPreconditionFailure(LinkedListIndexError) { list[5] = "" }
     }
     
     func testAppend() {
@@ -259,7 +260,7 @@ class LinkedListTest: XCTestCase {
         XCTAssertEqual(4, array.count)
     }
     
-    func testRange() {
+    func testSlice() {
         let list = LinkedList(1, 2, 3, 4, 5)
         let slice = list[..<2]
         
