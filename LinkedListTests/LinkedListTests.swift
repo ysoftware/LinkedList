@@ -237,7 +237,7 @@ class LinkedListTest: XCTestCase {
     
     func testRange() {
         let list = LinkedList(1, 2, 3, 4, 5)
-        let slice = list[..<1]
+        let slice = list[..<2]
         
         XCTAssertEqual(2, slice.count)
         
