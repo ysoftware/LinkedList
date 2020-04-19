@@ -13,6 +13,7 @@ class LinkedListTest: XCTestCase {
     
     func testSubscriptGet() {
         let list = LinkedList("Hello", ",", " ", "World")
+        print(list)
         
         XCTAssertEqual("Hello", list[0])
         XCTAssertEqual(",",     list[1])
@@ -24,8 +25,8 @@ class LinkedListTest: XCTestCase {
     func testSubscriptOutOfBounds() {
         let list = LinkedList("Hello", ",", " ", "World")
         
-        expectingPreconditionFailure("Index out of bounds") { _ = list[4] }
-        expectingPreconditionFailure("Index out of bounds") { _ = list[-1] }
+        expectingPreconditionFailure(LinkedListIndexError) { _ = list[4] }
+        expectingPreconditionFailure(LinkedListIndexError) { _ = list[-1] }
     }
     
     func testReverse() {
@@ -89,6 +90,11 @@ class LinkedListTest: XCTestCase {
         list2.dropFirst(1000)
         XCTAssertNil(list.first)
         XCTAssertEqual(0, list.count)
+        
+        list2.dropFirst()
+        print(list2)
+        
+        XCTAssert(list2.isEmpty)
     }
     
     func testDropLast() {
@@ -115,6 +121,8 @@ class LinkedListTest: XCTestCase {
         list2.dropLast(1000)
         XCTAssertNil(list.first)
         XCTAssertEqual(0, list.count)
+        
+        list2.dropLast()
     }
     
     func testRemove() {
@@ -217,7 +225,7 @@ class LinkedListTest: XCTestCase {
     }
     
     func testFilter() {
-        let list = LinkedList(1, 2, 3, 4, 5, 6, 7, 8, 9)
+        let list = LinkedList(withArray: [1, 2, 3, 4, 5, 6, 7, 8, 9])
         
         let list2 = list.filterLinked { $0 > 5 }
         XCTAssertEqual(4, list2.count)
@@ -225,6 +233,17 @@ class LinkedListTest: XCTestCase {
         
         let array = list.filter { $0 > 5 }
         XCTAssertEqual(4, array.count)
+    }
+    
+    func testRange() {
+        let list = LinkedList(1, 2, 3, 4, 5)
+        let slice = list[..<1]
+        
+        XCTAssertEqual(2, slice.count)
+        
+        let sublist = LinkedList(slice)
+        XCTAssertEqual(2, sublist.count)
+        assertLinked(sublist)
     }
     
     func assertLinked<T>(_ list: LinkedList<T>) {

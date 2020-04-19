@@ -8,6 +8,8 @@
 
 import Foundation
 
+internal let LinkedListIndexError = "List index out of bounds"
+
 public class LinkedList<Element> {
     
     internal class Node: CustomDebugStringConvertible {
@@ -38,6 +40,29 @@ public class LinkedList<Element> {
     public init(_ elements: Element...) {
         elements.forEach(append)
     }
+    
+    public init(_ slice: Slice<LinkedList<Element>>) {
+        guard slice.count > 0 else { return }
+        
+        var currentNodeBase = slice.base.node(at: slice.startIndex)!
+        count = slice.endIndex - slice.startIndex
+        
+        var lastAddedNode = Node(currentNodeBase.value)
+        firstNode = lastAddedNode
+        
+        for _ in 1..<count {
+            let nextNodeBase = currentNodeBase.nextNode!
+            
+            currentNodeBase = nextNodeBase
+            let newNode = Node(currentNodeBase.value)
+            lastAddedNode.nextNode = newNode
+            newNode.previousNode = lastAddedNode
+            
+            lastAddedNode = newNode
+        }
+        
+        lastNode = lastAddedNode
+    }
 }
 
 extension LinkedList: CustomDebugStringConvertible {
@@ -57,7 +82,7 @@ public extension LinkedList {
     }
     
     func remove(at index: Int) {
-        precondition(index >= 0 && index < count, "Index out of bounds")
+        precondition(index >= 0 && index < count, LinkedListIndexError)
         remove(node: node(at: index)!)
     }
     
@@ -117,11 +142,11 @@ public extension LinkedList {
     
     subscript(index: Int) -> Element {
         get {
-            precondition(index >= 0 && index < count, "Index out of bounds")
+            precondition(index >= 0 && index < count, LinkedListIndexError)
             return node(at: index)!.value
         }
         set(newValue) {
-            precondition(index >= 0 && index < count, "Index out of bounds")
+            precondition(index >= 0 && index < count, LinkedListIndexError)
             node(at: index)!.value = newValue
         }
     }
@@ -178,9 +203,13 @@ public extension LinkedList {
         return newList
     }
     
+    // MARK: - Properties
+    
     var first: Element? { firstNode?.value }
     
     var last: Element? { lastNode?.value }
+    
+    // MARK: - Internal
     
     internal func remove(node: Node) {
         node.previousNode?.nextNode = node.nextNode
@@ -240,5 +269,5 @@ extension LinkedList: Collection {
     
     public func index(after i: Int) -> Int { i + 1 }
     public var startIndex: Int { 0 }
-    public var endIndex: Int { count - 1 }
+    public var endIndex: Int { count == 0 ? 0 : count - 1 }
 }
