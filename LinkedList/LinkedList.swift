@@ -10,7 +10,7 @@ import Foundation
 
 internal let LinkedListIndexError = "List index out of bounds"
 
-public class LinkedList<Element> {
+public struct LinkedList<Element> {
     
     internal class Node: CustomDebugStringConvertible {
         
@@ -34,11 +34,25 @@ public class LinkedList<Element> {
     // MARK: - Initialization
     
     public init(withArray array: [Element]) {
-        array.forEach(append)
+        array.forEach { element in
+            let node = Node(element)
+            lastNode?.nextNode = node
+            node.previousNode = lastNode
+            if isEmpty { firstNode = node }
+            lastNode = node
+            count += 1
+        }
     }
     
     public init(_ elements: Element...) {
-        elements.forEach(append)
+        elements.forEach { element in
+            let node = Node(element)
+            lastNode?.nextNode = node
+            node.previousNode = lastNode
+            if isEmpty { firstNode = node }
+            lastNode = node
+            count += 1
+        }
     }
     
     public init(_ slice: Slice<LinkedList<Element>>) {
@@ -75,18 +89,18 @@ extension LinkedList: CustomDebugStringConvertible {
 
 public extension LinkedList {
     
-    func clear() {
+    mutating func clear() {
         firstNode = nil
         lastNode = nil
         count = 0
     }
     
-    func remove(at index: Int) {
+    mutating func remove(at index: Int) {
         precondition(index >= 0 && index < count, LinkedListIndexError)
         remove(node: node(at: index)!)
     }
     
-    func append(_ element: Element) {
+    mutating func append(_ element: Element) {
         let node = Node(element)
         lastNode?.nextNode = node
         node.previousNode = lastNode
@@ -95,7 +109,7 @@ public extension LinkedList {
         count += 1
     }
     
-    func prepend(_ element: Element) {
+    mutating func prepend(_ element: Element) {
         let node = Node(element)
         firstNode?.previousNode = node
         node.nextNode = firstNode
@@ -104,7 +118,7 @@ public extension LinkedList {
         count += 1
     }
     
-    func insert(_ value: Element, at index: Int) {
+    mutating func insert(_ value: Element, at index: Int) {
         if index >= count || index <= 0 && isEmpty { // new last node
             append(value)
         }
@@ -125,7 +139,7 @@ public extension LinkedList {
         }
     }
     
-    func reverse() {
+    mutating func reverse() {
         // this goes backwards because of the memory setup
         var node: Node! = lastNode
         repeat {
@@ -146,13 +160,13 @@ public extension LinkedList {
             precondition(index >= 0 && index < count, LinkedListIndexError)
             return node(at: index)!.value
         }
-        set(newValue) {
+        mutating set(newValue) {
             precondition(index >= 0 && index < count, LinkedListIndexError)
             node(at: index)!.value = newValue
         }
     }
     
-    func dropFirst(_ k: Int = 1) {
+    mutating func dropFirst(_ k: Int = 1) {
         guard !isEmpty else { return }
         guard k < count else { return clear() }
         
@@ -166,7 +180,7 @@ public extension LinkedList {
         count -= k
     }
     
-    func dropLast(_ k: Int = 1) {
+    mutating func dropLast(_ k: Int = 1) {
         guard !isEmpty else { return }
         guard k < count else { return clear() }
 
@@ -187,7 +201,7 @@ public extension LinkedList {
     }
     
     func mapLinked<T>(_ transform: (Element) throws -> T) rethrows -> LinkedList<T> {
-        let newList = LinkedList<T>()
+        var newList = LinkedList<T>()
         try forEach {
             newList.append(try transform($0))
         }
@@ -195,7 +209,7 @@ public extension LinkedList {
     }
     
     func filterLinked(_ isIncluded: (Element) throws -> Bool) rethrows -> LinkedList<Element> {
-        let newList = LinkedList<Element>()
+        var newList = LinkedList<Element>()
         try forEach {
             if try isIncluded($0) {
                 newList.append($0)
@@ -212,7 +226,7 @@ public extension LinkedList {
     
     // MARK: - Internal
     
-    internal func remove(node: Node) {
+    internal mutating func remove(node: Node) {
         node.previousNode?.nextNode = node.nextNode
         node.nextNode?.previousNode = node.previousNode
         count -= 1

@@ -23,7 +23,7 @@ class LinkedListTest: XCTestCase {
     }
     
     func testSubscriptOutOfBounds() {
-        let list = LinkedList("Hello", ",", " ", "World")
+        var list = LinkedList("Hello", ",", " ", "World")
         
         expectingPreconditionFailure(LinkedListIndexError) { _ = list[4] }
         expectingPreconditionFailure(LinkedListIndexError) { _ = list[-1] }
@@ -31,7 +31,7 @@ class LinkedListTest: XCTestCase {
     }
     
     func testAppend() {
-        let list = LinkedList<Int>()
+        var list = LinkedList<Int>()
         list.append(0)
         list.append(1)
         
@@ -43,7 +43,7 @@ class LinkedListTest: XCTestCase {
     }
     
     func testPrepend() {
-        let list = LinkedList<Int>()
+        var list = LinkedList<Int>()
         list.prepend(1)
         list.prepend(0)
         
@@ -55,7 +55,7 @@ class LinkedListTest: XCTestCase {
     }
     
     func testReverse() {
-        let list = LinkedList(3, 2, 1, 0)
+        var list = LinkedList(3, 2, 1, 0)
         list.reverse()
         
         XCTAssertEqual(0, list[0])
@@ -68,7 +68,7 @@ class LinkedListTest: XCTestCase {
     }
     
     func testSubscriptSet() {
-        let list = LinkedList("Hello", ",", " ", "World")
+        var list = LinkedList("Hello", ",", " ", "World")
         list[3] = "Sailor"
         
         XCTAssertEqual("Sailor", list[3])
@@ -92,7 +92,7 @@ class LinkedListTest: XCTestCase {
     }
     
     func testDropFirst() {
-        let list = LinkedList(1, 2, 3, 4, 5, 6)
+        var list = LinkedList(1, 2, 3, 4, 5, 6)
         list.dropFirst()
         
         XCTAssertEqual(2, list.first)
@@ -111,7 +111,7 @@ class LinkedListTest: XCTestCase {
         XCTAssert(list.isEmpty)
         
         // check drop more than count
-        let list2 = LinkedList(1, 2, 3, 4, 5, 6)
+        var list2 = LinkedList(1, 2, 3, 4, 5, 6)
         list2.dropFirst(1000)
         XCTAssertNil(list.first)
         XCTAssert(list.isEmpty)
@@ -123,7 +123,7 @@ class LinkedListTest: XCTestCase {
     }
     
     func testDropLast() {
-        let list = LinkedList(1, 2, 3, 4, 5, 6)
+        var list = LinkedList(1, 2, 3, 4, 5, 6)
         list.dropLast()
         
         XCTAssertEqual(5, list.last)
@@ -142,7 +142,7 @@ class LinkedListTest: XCTestCase {
         XCTAssert(list.isEmpty)
         
         // check drop more than count
-        let list2 = LinkedList(1, 2, 3, 4, 5, 6)
+        var list2 = LinkedList(1, 2, 3, 4, 5, 6)
         list2.dropLast(1000)
         XCTAssertNil(list.first)
         XCTAssert(list.isEmpty)
@@ -151,7 +151,7 @@ class LinkedListTest: XCTestCase {
     }
     
     func testRemove() {
-        let list = LinkedList("Hello", ",", " ", "World")
+        var list = LinkedList("Hello", ",", " ", "World")
         list.remove(at: 1)
         
         XCTAssertEqual("Hello", list[0])
@@ -162,7 +162,7 @@ class LinkedListTest: XCTestCase {
     }
     
     func testRemoveAtIndex() {
-        let list = LinkedList("Hello", ",", " ", "World")
+        var list = LinkedList("Hello", ",", " ", "World")
         list.remove(at: 1)
         
         XCTAssertEqual("Hello", list[0])
@@ -173,7 +173,7 @@ class LinkedListTest: XCTestCase {
     }
     
     func testRemoveFirst() {
-        let list = LinkedList(1, 2, 3, 4, 5)
+        var list = LinkedList(1, 2, 3, 4, 5)
         let secondNode = list.node(at: 1)
         list.remove(at: 0)
         
@@ -183,7 +183,7 @@ class LinkedListTest: XCTestCase {
     }
     
     func testRemoveLast() {
-        let list = LinkedList(1, 2, 3, 4, 5)
+        var list = LinkedList(1, 2, 3, 4, 5)
         let secondToLastNode = list.node(at: list.count-2)
         list.remove(at: list.count-1)
         
@@ -205,7 +205,7 @@ class LinkedListTest: XCTestCase {
     }
     
     func testInsert() {
-        let list = LinkedList(1, 3, 4, 5)
+        var list = LinkedList(1, 3, 4, 5)
         list.insert(2, at: 1)
         
         XCTAssertEqual(2, list[1])
