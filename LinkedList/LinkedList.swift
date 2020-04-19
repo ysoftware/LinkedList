@@ -10,11 +10,9 @@ import Foundation
 
 public class LinkedList<Element> {
     
-    public var count: Int = 0
-    
     public class Node: CustomDebugStringConvertible {
         
-        public var value: Element
+        public fileprivate(set) var value: Element
         public fileprivate(set) var nextNode: Node?
         public fileprivate(set) var previousNode: Node?
         
@@ -27,6 +25,7 @@ public class LinkedList<Element> {
         }
     }
     
+    public private(set) var count: Int = 0
     public private(set) var firstNode: Node?
     public private(set) var lastNode: Node?
     
