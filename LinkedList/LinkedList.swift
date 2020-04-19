@@ -49,7 +49,7 @@ public extension LinkedList {
     
     func remove(at index: Int) {
         precondition(index >= 0 && index < count, "Index out of bounds")
-        remove(node: node(at: index))
+        remove(node: node(at: index)!)
     }
     
     func remove(node: Node) {
@@ -91,7 +91,7 @@ public extension LinkedList {
         }
         else { // new node somewhere in the middle
             let newNode = Node(value)
-            let currentNode = node(at: index)
+            let currentNode = node(at: index)!
             let previousNode = currentNode.previousNode
             
             newNode.nextNode = currentNode
@@ -126,42 +126,68 @@ public extension LinkedList {
     
     subscript(index: Int) -> Element {
         get {
-            node(at: index).value
+            precondition(index >= 0 && index < count, "Index out of bounds")
+            return node(at: index)!.value
         }
         set(newValue) {
-            node(at: index).value = newValue
+            precondition(index >= 0 && index < count, "Index out of bounds")
+            node(at: index)!.value = newValue
         }
     }
     
-    var last: Element? { lastNode?.value }
-    
-    func node(at index: Int) -> Node {
-        precondition(index >= 0 && index < count, "Index out of bounds")
-    
-        var node: Node!
+    func node(at index: Int) -> Node? {
+        var node: Node?
         if index <= count / 2 {
             var i = 0
             node = firstNode
-            while i < index { node = node.nextNode!; i += 1 }
+            while i < index { node = node?.nextNode!; i += 1 }
         }
         else {
             node = lastNode
             var i = count - 1
-            while i > index { node = node.previousNode!; i -= 1 }
+            while i > index { node = node?.previousNode!; i -= 1 }
         }
         return node
     }
     
     func dropFirst(_ k: Int = 1) {
-        for _ in 0..<k {
-            remove(at: 0)
+        guard count > 0 else { return }
+        
+        if k >= count {
+            firstNode = nil
+            lastNode = nil
+            count = 0
+            return
         }
+        
+        var node = firstNode
+        for _ in 0..<k {
+            node = node?.nextNode
+        }
+        
+        node?.previousNode = nil
+        firstNode = node
+        count -= k
     }
     
     func dropLast(_ k: Int = 1) {
-        for _ in 0..<k {
-            remove(at: count-1)
+        guard count > 0 else { return }
+        
+        if k >= count {
+            firstNode = nil
+            lastNode = nil
+            count = 0
+            return
         }
+
+        var node = lastNode
+        for _ in 0..<k {
+            node = node?.previousNode
+        }
+        
+        node?.nextNode = nil
+        lastNode = node
+        count -= k
     }
     
     func map<T>(_ transform: (Element) throws -> T) rethrows -> [T] {
@@ -187,6 +213,10 @@ public extension LinkedList {
         }
         return newList
     }
+    
+    var first: Element? { firstNode?.value }
+    
+    var last: Element? { lastNode?.value }
 }
 
 extension LinkedList: Sequence {
