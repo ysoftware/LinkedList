@@ -88,15 +88,20 @@ public extension LinkedList {
     
     func append(_ element: Element) {
         let node = Node(element)
-        
-        if let lastNode = lastNode {
-            lastNode.nextNode = node
-            node.previousNode = lastNode
-        }
-        
+        lastNode?.nextNode = node
+        node.previousNode = lastNode
         if count == 0 { firstNode = node }
-        count += 1
         lastNode = node
+        count += 1
+    }
+    
+    func prepend(_ element: Element) {
+        let node = Node(element)
+        firstNode?.previousNode = node
+        node.nextNode = firstNode
+        if count == 0 { lastNode = node }
+        firstNode = node
+        count += 1
     }
     
     func insert(_ value: Element, at index: Int) {
@@ -104,11 +109,7 @@ public extension LinkedList {
             append(value)
         }
         else if index <= 0 { // new first node
-            let newNode = Node(value)
-            firstNode?.previousNode = newNode
-            newNode.nextNode = firstNode
-            firstNode = newNode
-            count += 1
+            prepend(value)
         }
         else { // new node somewhere in the middle
             let newNode = Node(value)

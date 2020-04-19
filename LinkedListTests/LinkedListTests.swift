@@ -29,6 +29,30 @@ class LinkedListTest: XCTestCase {
         expectingPreconditionFailure(LinkedListIndexError) { _ = list[-1] }
     }
     
+    func testAppend() {
+        let list = LinkedList<Int>()
+        list.append(0)
+        list.append(1)
+        
+        XCTAssertEqual(0, list[0])
+        XCTAssertEqual(1, list[1])
+        
+        XCTAssertEqual(2, list.count)
+        assertLinked(list)
+    }
+    
+    func testPrepend() {
+        let list = LinkedList<Int>()
+        list.prepend(1)
+        list.prepend(0)
+        
+        XCTAssertEqual(0, list[0])
+        XCTAssertEqual(1, list[1])
+        
+        XCTAssertEqual(2, list.count)
+        assertLinked(list)
+    }
+    
     func testReverse() {
         let list = LinkedList(3, 2, 1, 0)
         list.reverse()
