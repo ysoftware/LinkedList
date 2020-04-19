@@ -10,7 +10,7 @@ import Foundation
 
 public class LinkedList<Element> {
     
-    public class Node: CustomDebugStringConvertible {
+    internal class Node: CustomDebugStringConvertible {
         
         public fileprivate(set) var value: Element
         public fileprivate(set) var nextNode: Node?
@@ -26,8 +26,8 @@ public class LinkedList<Element> {
     }
     
     public private(set) var count: Int = 0
-    public private(set) var firstNode: Node?
-    public private(set) var lastNode: Node?
+    internal private(set) var firstNode: Node?
+    internal private(set) var lastNode: Node?
     
     // MARK: - Initialization
     
@@ -59,19 +59,6 @@ public extension LinkedList {
     func remove(at index: Int) {
         precondition(index >= 0 && index < count, "Index out of bounds")
         remove(node: node(at: index)!)
-    }
-    
-    func remove(node: Node) {
-        node.previousNode?.nextNode = node.nextNode
-        node.nextNode?.previousNode = node.previousNode
-        count -= 1
-        
-        if firstNode === node {
-            firstNode = node.nextNode
-        }
-        else if lastNode === node {
-            lastNode = node.previousNode
-        }
     }
     
     func append(_ element: Element) {
@@ -139,21 +126,6 @@ public extension LinkedList {
         }
     }
     
-    func node(at index: Int) -> Node? {
-        var node: Node?
-        if index <= count / 2 {
-            var i = 0
-            node = firstNode
-            while i < index { node = node?.nextNode; i += 1 }
-        }
-        else {
-            node = lastNode
-            var i = count - 1
-            while i > index { node = node?.previousNode; i -= 1 }
-        }
-        return node
-    }
-    
     func dropFirst(_ k: Int = 1) {
         guard count > 0 else { return }
         guard k < count else { return clear() }
@@ -209,6 +181,34 @@ public extension LinkedList {
     var first: Element? { firstNode?.value }
     
     var last: Element? { lastNode?.value }
+    
+    internal func remove(node: Node) {
+        node.previousNode?.nextNode = node.nextNode
+        node.nextNode?.previousNode = node.previousNode
+        count -= 1
+        
+        if firstNode === node {
+            firstNode = node.nextNode
+        }
+        else if lastNode === node {
+            lastNode = node.previousNode
+        }
+    }
+    
+    internal func node(at index: Int) -> Node? {
+        var node: Node?
+        if index <= count / 2 {
+            var i = 0
+            node = firstNode
+            while i < index { node = node?.nextNode; i += 1 }
+        }
+        else {
+            node = lastNode
+            var i = count - 1
+            while i > index { node = node?.previousNode; i -= 1 }
+        }
+        return node
+    }
 }
 
 extension LinkedList: Sequence {

@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import LinkedList
+@testable import LinkedList
 
 class LinkedListTest: XCTestCase {
     
@@ -119,7 +119,7 @@ class LinkedListTest: XCTestCase {
     
     func testRemove() {
         let list = LinkedList("Hello", ",", " ", "World")
-        list.remove(node: list.node(at: 1)!)
+        list.remove(at: 1)
         
         XCTAssertEqual("Hello", list[0])
         XCTAssertEqual(" ",     list[1])
