@@ -21,7 +21,7 @@ public class LinkedList<Element> {
         }
         
         public var debugDescription: String {
-            "Node: prev: \(previousNode != nil), next: \(nextNode != nil), value: \"\(value)\""
+            "Node: \(value) \(previousNode != nil ? "<" : "-")\(nextNode != nil ? ">" : "-")"
         }
     }
     
@@ -109,7 +109,7 @@ public extension LinkedList {
     }
     
     func reverse() {
-        // this goes backwards because of the memory management
+        // this goes backwards because of the memory setup
         var node: Node! = lastNode
         repeat {
             let _previousNode = node.previousNode
@@ -159,7 +159,7 @@ public extension LinkedList {
             node = node?.nextNode
         }
         
-        node?.previousNode = nil
+        // we can omit setting previousNode to nil because of the memory setup
         firstNode = node
         count -= k
     }
