@@ -31,6 +31,10 @@ public class LinkedList<Element> {
     
     // MARK: - Initialization
     
+    public init(withArray array: [Element]) {
+        array.forEach(append)
+    }
+    
     public init(_ elements: Element...) {
         elements.forEach(append)
     }
