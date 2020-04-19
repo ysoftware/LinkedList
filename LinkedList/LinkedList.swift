@@ -47,6 +47,12 @@ extension LinkedList: CustomDebugStringConvertible {
 
 public extension LinkedList {
     
+    func clear() {
+        firstNode = nil
+        lastNode = nil
+        count = 0
+    }
+    
     func remove(at index: Int) {
         precondition(index >= 0 && index < count, "Index out of bounds")
         remove(node: node(at: index)!)
@@ -152,13 +158,7 @@ public extension LinkedList {
     
     func dropFirst(_ k: Int = 1) {
         guard count > 0 else { return }
-        
-        if k >= count {
-            firstNode = nil
-            lastNode = nil
-            count = 0
-            return
-        }
+        guard k < count else { return clear() }
         
         var node = firstNode
         for _ in 0..<k {
@@ -172,13 +172,7 @@ public extension LinkedList {
     
     func dropLast(_ k: Int = 1) {
         guard count > 0 else { return }
-        
-        if k >= count {
-            firstNode = nil
-            lastNode = nil
-            count = 0
-            return
-        }
+        guard k < count else { return clear() }
 
         var node = lastNode
         for _ in 0..<k {
